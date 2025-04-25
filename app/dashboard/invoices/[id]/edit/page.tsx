@@ -3,15 +3,15 @@ import InvoicesTable from '@/app/ui/invoices/table';
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
 import { Suspense } from 'react';
+import { type SearchParams } from '@/app/lib/definitions'; // You should define this type
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
-  // Default fallback if searchParams is undefined or properties are missing
-  const query = typeof searchParams?.query === 'string' ? searchParams.query : '';
-  const pageParam = typeof searchParams?.page === 'string' ? parseInt(searchParams.page) : 1;
+interface PageProps {
+  searchParams?: SearchParams;
+}
+
+export default async function Page({ searchParams = {} }: PageProps) {
+  const query = typeof searchParams.query === 'string' ? searchParams.query : '';
+  const pageParam = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1;
   const currentPage = isNaN(pageParam) ? 1 : pageParam;
 
   const totalPages = await fetchInvoicesPages(query);

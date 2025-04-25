@@ -8,7 +8,9 @@ export type User = {
   email: string;
   password: string;
 };
-
+export type SearchParams = {
+  [key: string]: string | string[] | undefined;
+};
 export type Customer = {
   id: string;
   name: string;
